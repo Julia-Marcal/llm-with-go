@@ -9,9 +9,9 @@ import (
 	"github.com/tmc/langchaingo/llms/openai"
 )
 
-func ConfigureOpenRouter() (*string, *float64, llms.Model) {
+func ConfigureOpenRouter(promptQuestion string) (*string, *float64, llms.Model) {
 	model := flag.String("model", "meta-llama/llama-3.2-3b-instruct:free", "Model to use")
-	prompt := flag.String("prompt", "What is a good name for a orange cat?", "Prompt being sent")
+	prompt := flag.String("prompt", promptQuestion, "Prompt being sent")
 	temperature := flag.Float64("temp", 0.8, "Temperature for response")
 	flag.Parse()
 

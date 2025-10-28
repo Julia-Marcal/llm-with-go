@@ -9,8 +9,8 @@ import (
 	"github.com/tmc/langchaingo/llms"
 )
 
-func ExecuteCall(ctx context.Context) (string, error) {
-	prompt, temperature, llm := models.ConfigureOpenRouter()
+func ExecuteCall(ctx context.Context, promptQuestion string) (string, error) {
+	prompt, temperature, llm := models.ConfigureOpenRouter(promptQuestion)
 
 	start := time.Now()
 
