@@ -38,7 +38,7 @@ func client(ctx context.Context, clientTransport mcp.Transport) {
 
 	res, err := clientSession.CallTool(ctx, &mcp.CallToolParams{
 		Name:      "llm-caller",
-		Arguments: map[string]any{"name": "What is Go language?"},
+		Arguments: map[string]any{"name": "Give me 3 names for a golang project?"},
 	})
 	if err != nil {
 		log.Fatal(err)
@@ -73,7 +73,7 @@ func askQuestion(ctx context.Context, req *mcp.CallToolRequest, args QuestionPar
 func executeLLM(ctx context.Context, promptQuestion string) (string, error) {
 	response, err := infrastructures.ExecuteCall(ctx, promptQuestion)
 	if err != nil {
-		slog.Error("Exceeded available tokens", slog.Any("token_error", err))
+		slog.Error("Failed to execute LLM call", slog.Any("error", err))
 		return "", err
 	}
 	return response, nil
