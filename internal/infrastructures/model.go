@@ -10,7 +10,7 @@ import (
 )
 
 func ExecuteCall(ctx context.Context, prompt string) (string, error) {
-	temperature, llm := models.ConfigureOpenRouter(prompt)
+	temperature, llm := models.ConfigureOpenRouter()
 
 	start := time.Now()
 
