@@ -4,7 +4,6 @@ import (
 	"context"
 	"log/slog"
 
-	"github.com/julia-marcal/llm-with-go/internal/client"
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 )
 
@@ -17,9 +16,8 @@ func Start(serverTransport, clientTransport mcp.Transport) {
 	RegisterTools(srv)
 	SetActiveServer(srv)
 
-	// If a clientTransport is provided (e.g., in-memory demo), start the in-process client
 	if clientTransport != nil {
-		go client.Main(ctx, clientTransport)
+		slog.Info("client transport provided; start an external client to connect to the server")
 	}
 
 	serverSession, err := srv.Connect(ctx, serverTransport, nil)
