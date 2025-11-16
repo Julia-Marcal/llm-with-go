@@ -9,8 +9,8 @@ import (
 	"github.com/tmc/langchaingo/llms"
 )
 
-func ExecuteCall(ctx context.Context) (string, error) {
-	prompt, temperature, llm := models.ConfigureOpenRouter()
+func ExecuteCall(ctx context.Context, prompt string) (string, error) {
+	temperature, llm := models.ConfigureOpenRouter()
 
 	start := time.Now()
 
@@ -18,7 +18,7 @@ func ExecuteCall(ctx context.Context) (string, error) {
 	duration := time.Since(start)
 
 	audit := dto.LLMAudit{
-		Prompt:      *prompt,
+		Prompt:      prompt,
 		Temperature: *temperature,
 		Response:    response,
 		Err:         err,
@@ -30,12 +30,12 @@ func ExecuteCall(ctx context.Context) (string, error) {
 	return response, err
 }
 
-func executePrompt(ctx context.Context, llm llms.Model, prompt *string, temp *float64) (string, error) {
+func executePrompt(ctx context.Context, llm llms.Model, prompt string, temp *float64) (string, error) {
 	opts := []llms.CallOption{
 		llms.WithTemperature(*temp),
 	}
 
-	response, err := llms.GenerateFromSinglePrompt(ctx, llm, *prompt, opts...)
+	response, err := llms.GenerateFromSinglePrompt(ctx, llm, prompt, opts...)
 
 	if err != nil {
 		return "", err

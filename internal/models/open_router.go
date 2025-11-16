@@ -9,13 +9,13 @@ import (
 	"github.com/tmc/langchaingo/llms/openai"
 )
 
-func ConfigureOpenRouter() (*string, *float64, llms.Model) {
-	model := flag.String("model", "meta-llama/llama-3.2-3b-instruct:free", "Model to use")
-	prompt := flag.String("prompt", "What is a good name for a orange cat?", "Prompt being sent")
+func ConfigureOpenRouter() (*float64, llms.Model) {
+	apiKey := os.Getenv("OPENROUTER_API_KEY")
+	orModel := os.Getenv("OPENROUTER_MODEL")
+
+	model := flag.String("model", orModel, "Model to use")
 	temperature := flag.Float64("temp", 0.8, "Temperature for response")
 	flag.Parse()
-
-	apiKey := os.Getenv("OPENROUTER_API_KEY")
 
 	llm, err := openai.New(
 		openai.WithModel(*model),
@@ -26,5 +26,5 @@ func ConfigureOpenRouter() (*string, *float64, llms.Model) {
 		log.Fatal(err)
 	}
 
-	return prompt, temperature, llm
+	return temperature, llm
 }
